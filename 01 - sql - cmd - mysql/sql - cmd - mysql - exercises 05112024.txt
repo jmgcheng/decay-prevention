@@ -1,0 +1,653 @@
+- here, routines are "exercises"
+- exercises ARE NOT study materials
+- you do "exercises" everyday if you have time to spare
+- "exercises" are use for "daily execution" to remove skill decay, achieve mastery, and job interview preparedness
+- "exercises" for job interview preparedness "anytime anywhere"
+- exercise has a "contained" specific goal 
+- exercise may have "steps" to finish the said exercise
+- pervious exercise should mostly prepare you for the next exercise
+- exercise are arrange from top the easiest to hardest at the bottom
+- "futured decayed self" is expected to slowly repeat an exercise and proceed to the next if skill/knowledge and time are ready
+- improve and insert more exercise as time goes on
+
+
+
+
+
+
+> exercise n - check Windows environment variable for mysql
+	/*
+		Goals:
+			- make sure an environment variable exist for mysql in path so cmd command can work
+		Requirements:
+			- mysql should be installed in your computer
+				- i got my mysql from xampp bundle
+		Notes:
+			- 
+	*/
+	- step n
+		windows button > system environment variables > advanced tab > Environment Variables button > System variables table > choose Path variable > edit > new > add "C:\xampp\mysql\bin"
+
+
+
+> exercise n - check if a mysql process is running
+	/*
+		Goals:
+			- debugging
+			- see its process id so you can check in task manager and kill it
+		Requirements:
+			- 
+		Notes:
+			- there are times you might want to kill a mysql process so you can run your own mysql
+	*/
+	- step n
+		# for windows
+		> netstat -ano | findstr :3306
+		> tasklist | findstr /I "sql"
+
+		# for linux
+		> netstat -ano | grep :3306
+
+
+
+> exercise n - start mysql with root user using xampp mysql
+	/*
+		Goals:
+			- use cmd for mysql
+		Requirements:
+			- mysql should be installed in your computer
+				- i got my mysql from xampp bundle
+			- windows path variable should be set for mysql
+		Notes:
+			- 
+	*/
+	- step n
+		- start xampp
+		- start mysql
+
+	- step n
+		# login root if no password
+		> mysql -u root
+
+	- step n
+		# login root if has password
+		> mysql -u root -p 
+
+
+
+> exercise n - show databases
+	/*
+		Goals:
+			- list down all existing databases
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> show databases;
+	
+
+
+> exercise n - show users
+	/*
+		Goals:
+			- list down all existing users
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> SELECT User FROM mysql.user;
+
+
+
+> exercise n - create, use, and delete database
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> CREATE DATABASE testdb;
+
+	- step n
+		> USE testdb;
+
+	- step n
+		> DROP DATABASE testdb;
+
+
+
+> exercise n - show tables of a database
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		# use a database first
+		> use database_name
+
+	- step n
+		> SHOW TABLES;
+
+
+
+> exercise n - create a user and use it
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		# login to root first
+		> mysql -u root
+
+	- step n
+		# create a user with password to connect at your localhost
+		> CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
+
+		# create a user with no password to connect at a specific ip
+		> CREATE USER 'username'@'192.168.1.100' IDENTIFIED BY '';
+
+	- step n
+		# create a user for a specific database only
+		# .* means all table within that database
+		> GRANT ALL PRIVILEGES ON database_name.* TO 'username'@'localhost';
+
+	- step n
+		# you need to exit first
+		> exit
+
+		# use user
+		> mysql -u username
+
+
+
+> exercise n - check current user
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> SELECT USER();
+
+
+
+
+> exercise n - delete user
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> DROP USER 'username'@'hostname';
+
+
+
+
+> exercise n - create, describe, and drop table
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> use database_name;
+
+	- step n
+		> CREATE TABLE users (id int NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, PRIMARY KEY (id));
+		> CREATE TABLE posts (id int NOT NULL AUTO_INCREMENT, date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, author_id int NOT NULL, 
+								title varchar(255) NOT NULL, content text,
+								PRIMARY KEY (id), FOREIGN KEY (author_id) REFERENCES users(id));
+
+	- step n
+		> describe users;
+		> describe posts;
+
+	- step n
+		> DROP TABLE users;	
+
+
+
+> exercise n - insert and select records in table
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- use database_name
+
+	- step n
+		> INSERT INTO users (name) values ('Bob'), ('John'), ('Steve');
+		> INSERT INTO posts (author_id, title, content) values (1, 'First Post', 'The first content'), (1, 'Second Post', 'Second content posted');
+
+	- step n
+		> SELECT * FROM users;
+		> SELECT * FROM users as u LEFT JOIN posts as p ON u.id = p.author_id ORDER BY p.date, p.id DESC;
+		> SELECT * FROM users as u LEFT JOIN posts as p ON u.id = p.author_id WHERE p.author_id != 'NULL' ORDER BY p.date, p.id DESC;
+
+
+
+> exercise n - update table record
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> use database_name
+
+	- step n
+		> UPDATE posts SET author_id = 3, title= 'Updated Post' WHERE posts.id = 2;
+		> SELECT * FROM posts;
+
+
+
+> exercise n - delete table record
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> DELETE FROM posts WHERE posts.id = 2;
+		> SELECT * FROM posts;
+
+
+
+> exercise n - delete all records in table
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> TRUNCATE table posts;
+
+
+
+> exercise n - add and drop primary and foreign key on a table
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> show tables;
+		> describe users;
+
+	- step n
+		# add a primary key in an existing table
+		> ALTER TABLE users ADD PRIMARY KEY (id);
+
+		# add a foreign key in an existing table
+		> ALTER TABLE posts ADD FOREIGN KEY (author_id) REFERENCES users(id);
+
+		#
+		> ALTER TABLE tableName MODIFY COLUMN id INT auto_increment;
+
+	- step n
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+

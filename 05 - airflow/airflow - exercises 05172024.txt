@@ -1,0 +1,649 @@
+- here, routines are "exercises"
+- exercises ARE NOT study materials
+- you do "exercises" everyday if you have time to spare
+- "exercises" are use for "daily execution" to remove skill decay, achieve mastery, and job interview preparedness
+- "exercises" for job interview preparedness "anytime anywhere"
+- exercise has a "contained" specific goal 
+- exercise may have "steps" to finish the said exercise
+- pervious exercise should mostly prepare you for the next exercise
+- exercise are arrange from top the easiest to hardest at the bottom
+- "futured decayed self" is expected to slowly repeat an exercise and proceed to the next if skill/knowledge and time are ready
+- improve and insert more exercise as time goes on
+
+
+
+
+
+
+> exercise n - installation
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- linux
+				- by default
+					- Airflow requires a home directory, and uses ~/airflow by default, but you can set a different location if you prefer. 
+					- The AIRFLOW_HOME environment variable is used to inform Airflow of the desired location
+	*/
+	- step n
+		> mkdri projName
+		> cd projName
+		> python -m venv env
+
+		# in windows
+		> env\Scripts\activate
+
+		# in linux
+		> source env/bin/activate
+
+	- step n - virtual box linux
+		> export AIRFLOW_HOME=~/airflow
+		> AIRFLOW_VERSION=2.9.0
+		> PYTHON_VERSION="$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')"
+		> CONSTRAINT_URL="https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PYTHON_VERSION}.txt"
+		> pip install "apache-airflow==${AIRFLOW_VERSION}" --constraint "${CONSTRAINT_URL}"		
+
+
+
+> exercise n - run airflow UI dashboard
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		# Visit localhost:8080 in your browser and log in with the admin account details shown in the terminal
+		> airflow standalone
+
+
+
+> exercise n - 
+	/*
+		Goals:
+			- task1
+				- linux cmd
+					> echo "hello"
+			- task2
+				- linux cmd
+					> sleep 5 
+			- task3
+				- python cmd
+					> print("world")
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		# test01.py
+		import datetime as dt
+		from airflow import DAG
+		from airflow.operators.bash_operator import BashOperator
+		from airflow.operators.python_operator import PythonOperator
+
+		def print_world():
+		    print('world')
+
+		default_args = {
+		    'owner': 'UnflodDS',
+		    'start_date': dt.datetime(2023, 6, 1),
+		    'retries': 1,
+		    'retry_delay': dt.timedelta(minutes=5),
+		}
+
+		with DAG('airflow_tutorial_v01',
+		         default_args = default_args,
+		         schedule_interval = '0 * * * *',
+		         ) as dag:
+		    print_hello = BashOperator(task_id = 'print_hello', bash_command = 'echo "hello"')
+		    sleep = BashOperator(task_id = 'sleep', bash_command = 'sleep 5')
+		    print_w = PythonOperator(task_id = 'print_world', python_callable = print_world)
+
+		print_hello >> sleep >> print_w		
+
+	- step n
+		# Visit localhost:8080 in your browser and log in with the admin account details shown in the terminal
+		> airflow standalone
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+

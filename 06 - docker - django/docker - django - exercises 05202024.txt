@@ -1,0 +1,723 @@
+- here, routines are "exercises"
+- exercises ARE NOT study materials
+- you do "exercises" everyday if you have time to spare
+- "exercises" are use for "daily execution" to remove skill decay, achieve mastery, and job interview preparedness
+- "exercises" for job interview preparedness "anytime anywhere"
+- exercise has a "contained" specific goal 
+- exercise may have "steps" to finish the said exercise
+- pervious exercise should mostly prepare you for the next exercise
+- exercise are arrange from top the easiest to hardest at the bottom
+- "futured decayed self" is expected to slowly repeat an exercise and proceed to the next if skill/knowledge and time are ready
+ improve and insert more exercise as time goes on
+
+
+
+
+
+
+> exercise n - installation - Docker
+	/*
+		Goals:
+			- 
+		Notes:
+			- its been a long time since i installed Docker in my windows and I did not take notes before
+			- i remember that
+				- WSL or windows subsystem for linux is required before installing Docker
+			- be sure Docker is properly installed before proceeding below for exercise below
+		Requirements:
+			- Docker Desktop application should already be running before proceeding below
+	*/
+
+
+
+> exercise n - Docker Desktop
+	/*
+		Goals:
+			- 
+		Requirements:
+			- installed Docker Desktop
+		Notes:
+			- sometimes it easier to check logs/interact using Docker Desktop by check each container
+				- rather than check them manually each using a terminal
+				- but the terminal that run/start the build or compose is advisable not to dettached so mixed logs with cronological order can be seen easily at that terminal
+			- delete your old Volumes if current container is having issues
+	*/
+
+
+
+> exercise n - 
+	/*
+		Goals:
+			- compose 2 containers that interact together
+				- django and mysql
+		Requirements:
+			- 
+		Notes:
+			- docker-compose up --build
+				- dont use detached mode so that you can see all container logs in a single terminal
+				- starting the mysql container takes time, like more than 6 mins in fresh start
+					- icons of django container is Docker Desktop might be yellow but just wait, let it do its job. check logs
+				- last time i successfully build everything from fresh start
+					- django container did wait properly before it started its migration and runserver
+				- i was able to login as admin in django admin dashboard by just relying on the migration at entrypoint.sh
+					- although this is not perfect, there are more times it fails
+						- there are times where db container is ready, then when django container is about the connect the db, suddenly db container crash and needs to restart
+			- django website here is just a default installation, no apps were added
+				- just want to make sure the django container was able to wait and connect to the mysql container when it was ready
+				- django site structure was not modified
+				- realtime updates was seen when i'm updating the settings.py
+					- logs where showing updated errors from my updates
+			- wait-for-it.sh script can be found at
+				- https://github.com/vishnubob/wait-for-it/blob/master/wait-for-it.sh
+	*/
+	- step n - installations
+		> python -m venv env
+		> env\scripts\activate
+		> pip install Django==5.0.6
+		> pip install mysqlclient==2.2.4
+		> django-admin startproject core
+		> cd core
+
+	- step n - structure directory
+		#
+		projName/core/core/settings.py
+		projName/core/manage.py
+		projName/core/requirements.txt
+		projName/core/Dockerfile
+		projName/core/docker-compose.yml
+		projName/core/entrypoint.sh
+		projName/core/wait-for-it.sh
+		projName/core/init.sql
+
+	- step n - 
+		> pip freeze > requirements.txt
+		> pip install -r requirements.txt
+
+	- step n - requirements.txt
+		asgiref==3.8.1
+		Django==5.0.6
+		mysqlclient==2.2.4
+		sqlparse==0.5.0
+		tzdata==2024.1
+
+	- step n - settings.py
+		#
+		import os
+		...
+		DATABASES = {
+		    'default': {
+		        'ENGINE': 'django.db.backends.mysql',
+		        'NAME': 'testdb',             			# Database name
+		        'USER': 'root',           				# Database user
+		        'PASSWORD': 'password',       			# Database password
+		        'HOST': 'db',
+		        'PORT': '3306',               			# MySQL database port
+		    }
+		}
+
+	- step n - Dockerfile
+		#
+		# Use an official Python runtime as a parent image
+		FROM python:3.10-slim
+
+		# Set the working directory in the container
+		WORKDIR /app
+
+		# Install system dependencies
+		RUN apt-get update \
+		    && apt-get install -y --no-install-recommends \
+		    gcc \
+		    libmariadb-dev-compat libmariadb-dev \
+		    pkg-config \
+		    && apt-get clean \
+		    && rm -rf /var/lib/apt/lists/*
+
+		# Install Python dependencies
+		COPY requirements.txt /app/
+		RUN pip install --no-cache-dir -r requirements.txt
+
+		# Copy the Django application code into the container
+		COPY . /app/
+
+		# Make entrypoint script executable
+		RUN chmod +x /app/entrypoint.sh
+		RUN chmod +x /app/wait-for-it.sh
+
+		# Set the entrypoint to the entrypoint.sh script
+		ENTRYPOINT ["/app/entrypoint.sh"]
+
+		# Expose the Django development server port
+		EXPOSE 8000
+
+		# Run Django development server
+		CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+	- step n - docker-compose.yml
+		#
+		version: "3.8"
+		services:
+		  db:
+		    image: mysql:8.0.37-bookworm
+		    container_name: db_mysql
+		    restart: always                       
+		    environment:
+		      MYSQL_DATABASE: 'testdb'
+		      MYSQL_USER: 'testuser'
+		      MYSQL_PASSWORD: 'password'
+		      MYSQL_ROOT_PASSWORD: 'password'
+		    ports:
+		      - '3306:3306'                       
+		    expose:
+		      - '3306'
+		    volumes:
+		      - mysql-db:/var/lib/mysql
+		      - .init.sql:/docker-entrypoint-initdb.d/init.sql
+		    healthcheck:
+		      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+		      retries: 100     
+		      interval: 30s
+		      timeout: 30s
+		      start_period: 30s 
+
+		  django:
+		    build: .                              	# Specify the directory containing your Django app Dockerfile
+		    container_name: django-app
+		    restart: always
+		    environment:
+		      - DEBUG=1                           	# Set Django debug mode
+		      - SECRET_KEY=your_secret_key        	# Set Django secret key
+		      - DB_NAME=testdb                    	# MySQL database name
+		      - DB_USER=root                  		# MySQL database user
+		      - DB_PASSWORD=password              	# MySQL database password
+		      - DB_HOST=mysql                     	# MySQL container hostname (service name in Docker Compose)
+		      - DB_PORT=3306                      	# MySQL database port
+		    ports:
+		      - '8000:8000'                       	# Map Django development server port
+		    expose:
+		      - '8000'
+		    depends_on:
+		      db:
+		        condition: service_healthy
+		    volumes:
+		      - .:/app                            	# Mount your Django app directory
+		    command: .entrypoint.sh
+
+
+		volumes:
+		        mysql-db:		
+
+
+	- step n - entrypoint.sh
+		#
+		#!/bin/bash
+
+		echo "Waiting for MYSQL to start..."
+		/app/wait-for-it.sh db:3306 -t 60
+
+		# Run Django migrations
+		echo "Migrating the databse..."
+		python manage.py migrate
+
+		# Check if the superuser exists
+		echo "Checking if superuser exists..."
+		python manage.py shell -c "from django.contrib.auth.models import User; print(User.objects.filter(username='admin').exists())" | grep "True" || python manage.py createsuperuser --username admin --email admin@example.com --password 1234
+
+		# Check if the normal user exists
+		echo "Checking if normal user exists..."
+		python manage.py shell -c "from django.contrib.auth.models import User; print(User.objects.filter(username='user').exists())" | grep "True" || python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_user('user', 'user@example.com', 'password')"
+
+		# Start the Django application
+		# 0.0.0.0 is important so localhost can be used in your browser outside the container
+		python manage.py runserver 0.0.0.0:8000
+
+
+	- step n - init.sql
+		#
+		CREATE DATABASE IF NOT EXISTS testdb;
+
+
+
+
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+

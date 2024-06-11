@@ -1,0 +1,605 @@
+- here, routines are "exercises"
+- exercises ARE NOT study materials
+- you do "exercises" everyday if you have time to spare
+- "exercises" are use for "daily execution" to remove skill decay, achieve mastery, and job interview preparedness
+- "exercises" for job interview preparedness "anytime anywhere"
+- exercise has a "contained" specific goal 
+- exercise may have "steps" to finish the said exercise
+- pervious exercise should mostly prepare you for the next exercise
+- exercise are arrange from top the easiest to hardest at the bottom
+- "futured decayed self" is expected to slowly repeat an exercise and proceed to the next if skill/knowledge and time are ready
+- improve and insert more exercise as time goes on
+
+
+
+
+
+
+> exercise n - installation - Docker
+	/*
+		Goals:
+			- 
+		Notes:
+			- its been a long time since i installed Docker in my windows and I did not take notes before
+			- i remember that
+				- WSL or windows subsystem for linux is required before installing Docker
+			- be sure Docker is properly installed before proceeding below for exercise below
+		Requirements:
+			- Docker Desktop application should already be running before proceeding below
+	*/
+
+
+
+> exercise n - Docker Desktop
+	/*
+		Goals:
+			- 
+		Requirements:
+			- installed Docker Desktop
+		Notes:
+			- sometimes it easier to check logs/interact using Docker Desktop by check each container
+				- rather than check them manually each using a terminal
+				- but the terminal that run/start the build or compose is advisable not to dettached so mixed logs with cronological order can be seen easily at that terminal
+			- delete your old Volumes if current container is having issues
+	*/
+
+
+
+> exercise n - docker basic commands
+	/*
+		Goals:
+			- 
+		Requirements:
+			- Docker Desktop application should already be running before proceeding below
+				- wait for everything in tasks manager to calm down before proceeding to every resoure intensive tasks
+		Notes:
+			- 
+	*/
+	- step n - check version
+		> docker version
+
+	- step n - list images available
+		> docker image ls
+		or
+		> docker images
+
+	- step n - list running containers
+		> docker ps
+
+	- step n - list containers including the stop ones
+		> docker ps -a
+
+	- step n - build an image
+		# Dockerfile should already exist in your current pwd
+		# docker build -t <name> <directory>
+		> docker build -t hello-docker .
+
+	- step n - starts and run a new container out of an image
+		# docker run <name>
+		> docker run hello-docker
+
+	- step n - run a new container dettached mode
+		# -d is detached mode
+		# -p is port, 1st value is your host, 2nd value is port inside container
+		# 		1st port value is what you put in your browser to check the site
+		> docker run -d -p 3000:3000 react-app
+
+	- step n - run a new container with a name
+		> docker run -d -p 3001:3000 --name pinkstart react-app
+
+	- step n - start a stop container
+		> docker start -i <containerID>
+
+	- step n - interact exec with a container
+		> docker exec -it <containerID> bash
+		# with user
+		> docker exec -it -u john <containerID> bash
+
+	- step n - login in mysql inside the mysql container
+		> mysql -u root -p
+
+	- step n - stop using container
+		> exit
+
+
+
+> exercise n - docker compose commands
+	/*
+		Goals:
+			- 
+		Requirements:
+			- Docker Desktop application should already be running before proceeding below
+		Notes:
+			- 
+	*/
+	- step n - start docker-compose in dettached mode
+		> docker-compose up -d --build
+		# sometimes its advisable to run without -d so that all logs are in one single terminal in cronological order
+
+	- step n - stop docker-compose
+		> docker-compose down
+
+
+
+> exercise n - Dockerfile - node, alpine
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		#
+		FROM node:alpine
+		COPY . /app
+		WORKDIR /app
+		CMD ["node", "app.js"]
+	
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+

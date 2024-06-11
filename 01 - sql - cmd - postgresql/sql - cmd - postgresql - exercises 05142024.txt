@@ -1,0 +1,626 @@
+- here, routines are "exercises"
+- exercises ARE NOT study materials
+- you do "exercises" everyday if you have time to spare
+- "exercises" are use for "daily execution" to remove skill decay, achieve mastery, and job interview preparedness
+- "exercises" for job interview preparedness "anytime anywhere"
+- exercise has a "contained" specific goal 
+- exercise may have "steps" to finish the said exercise
+- pervious exercise should mostly prepare you for the next exercise
+- exercise are arrange from top the easiest to hardest at the bottom
+- "futured decayed self" is expected to slowly repeat an exercise and proceed to the next if skill/knowledge and time are ready
+- improve and insert more exercise as time goes on
+
+
+
+
+
+
+
+> exercise n - check if a postgresql process is running
+	/*
+		Goals:
+			- debugging
+			- see its process id so you can check in task manager and kill it
+		Requirements:
+			- postgresql was installed in my computer using pgAdmin
+				- postsgresql autostarts when starting computer
+		Notes:
+			- there are times you might want to kill a postgresql process so you can run your own postgresql
+	*/
+	- step n
+		# for windows
+		> netstat -ano | findstr :5432
+		> tasklist | findstr /I "postgres"
+
+
+
+> exercise n - check Windows environment variable for postgresql
+	/*
+		Goals:
+			- make sure an environment variable exist for mysql in path so cmd command can work
+		Requirements:
+			- postgresql was installed in my computer using pgAdmin
+				- postsgresql autostarts when starting computer
+		Notes:
+			- 
+	*/
+	- step n
+		windows button > system environment variables > advanced tab > Environment Variables button > System variables table > choose Path variable > edit > new > add "C:\Program Files\PostgreSQL\16\bin"
+
+
+
+> exercise n - start postgresql with with default user postgres
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		# -d is database, -W is for ask password
+		- psql -U postgres -d postgres -W
+		# password is password
+
+
+
+> exercise n - show databases
+	/*
+		Goals:
+			- list down all existing databases
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> \l
+	
+
+
+> exercise n - show users
+	/*
+		Goals:
+			- list down all existing users
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> SELECT usename AS "user" FROM pg_user;
+
+
+
+> exercise n - create, use, and delete database
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> CREATE DATABASE testdb;
+
+	- step n
+		> \c testdb
+
+	- step n
+		> DROP DATABASE testdb;
+
+
+
+> exercise n - show tables of a database
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		# use a database first
+		> \c database_name
+
+	- step n
+		> \dt
+
+
+
+> exercise n - create a user and use it
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> CREATE USER testuser WITH PASSWORD 'password';
+
+	- step n
+		> SET ROLE testuser;
+
+
+
+> exercise n - check current user
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> SELECT current_user;
+
+
+
+> exercise n - delete user
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> SET ROLE postgres
+		> DROP USER testuser;
+
+
+
+> exercise n - create, describe, and drop table
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> \c database_name;
+
+	- step n
+		> CREATE TABLE users (id SERIAL PRIMARY KEY, name VARCHAR(255) NOT NULL );
+
+		> CREATE TABLE posts (
+		    id SERIAL PRIMARY KEY,
+		    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+		    author_id INT NOT NULL,
+		    title VARCHAR(255) NOT NULL,
+		    content TEXT,
+		    FOREIGN KEY (author_id) REFERENCES users(id)
+		);
+
+	- step n
+		> \d users;
+		> \d posts;
+
+
+	- step n
+		> DROP TABLE users;	
+
+
+
+> exercise n - insert and select records in table
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- use database_name
+
+	- step n
+		> INSERT INTO users (name) values ('Bob'), ('John'), ('Steve');
+		> INSERT INTO posts (author_id, title, content) values (1, 'First Post', 'The first content'), (1, 'Second Post', 'Second content posted');
+
+	- step n
+		> SELECT * FROM users;
+		> SELECT u.*, p.* FROM users u LEFT JOIN posts p ON u.id = p.author_id ORDER BY p.date DESC, p.id DESC;
+		> SELECT u.*, p.* FROM users u LEFT JOIN posts p ON u.id = p.author_id WHERE p.author_id IS NOT NULL ORDER BY p.date DESC, p.id DESC;
+
+
+
+> exercise n - update table record
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> use database_name
+
+	- step n
+		> UPDATE posts SET author_id = 3, title= 'Updated Post' WHERE posts.id = 2;
+		> SELECT * FROM posts;
+
+
+
+> exercise n - delete table record
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> DELETE FROM posts WHERE posts.id = 2;
+		> SELECT * FROM posts;
+
+
+
+> exercise n - delete all records in table
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> TRUNCATE table posts;
+
+
+
+> exercise n - add and drop primary and foreign key on a table
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> \dt;
+		> \d users;
+
+	- step n
+		# add a primary key in an existing table
+		> ALTER TABLE users ADD PRIMARY KEY (id);
+
+		# add a foreign key in an existing table
+		> ALTER TABLE posts ADD CONSTRAINT fk_author_id FOREIGN KEY (author_id) REFERENCES users(id);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+

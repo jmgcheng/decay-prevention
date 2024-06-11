@@ -1,0 +1,1129 @@
+- here, routines are "exercises"
+- exercises ARE NOT study materials
+- you do "exercises" everyday if you have time to spare
+- "exercises" are use for "daily execution" to remove skill decay, achieve mastery, and job interview preparedness
+- "exercises" for job interview preparedness "anytime anywhere"
+- exercise has a "contained" specific goal 
+- exercise may have "steps" to finish the said exercise
+- pervious exercise should mostly prepare you for the next exercise
+- exercise are arrange from top the easiest to hardest at the bottom
+- "futured decayed self" is expected to slowly repeat an exercise and proceed to the next if skill/knowledge and time are ready
+- improve and insert more exercise as time goes on
+
+
+
+
+
+
+> exercise n - check if python and pip exist/version
+	/*
+		Goals:
+			- a quick check to see if we have python, if not, go to python website and install it first
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> python --version
+		> pip --version
+
+
+
+> exercise n - open python interpreter
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- you can code here
+	*/
+	- step n
+		> python
+
+
+
+> exercise n - setup virtual environment
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> mkdri projName
+		> cd projName
+		> python -m venv env
+
+		# in windows
+		> env\Scripts\activate
+
+		# in linux
+		> source env/bin/activate
+
+
+
+
+> exercise n - IDE
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- much better to use visual studio code
+				- extension used
+					- Python for intellisense
+					- autopep8 for formatter
+						- manual Format Document
+							- ctrl + shift + p
+							- Format Document
+						- Auto Format Document when save
+							> file > Preferences > Settings > search in searchbox "formatOnSave" > tick the checkbox					
+					- Pylance
+						- most of the time i just disable this
+	*/
+
+
+
+> exercise n - variables
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- python is dynamically type but you can make it strong type
+	*/
+	- step n
+		# interger
+		i_count = 1000
+
+		# float
+		f_rating = 4.99
+
+		# boolean
+		is_published = True
+
+		# string
+		s_course_name = "Python Programming"
+
+		# formatted
+		email = """
+			Dear Cheng,
+				Apply na
+			Thanks
+		"""		
+
+		# list
+		s_names = ['jon', 'bob', 'cheng']
+
+		# list unpacking
+		numbers = [1, 2, 3]
+		first, second, third = numbers
+
+		# list unpacking
+		numbers = [1, 2, 3, 4, 4, 4, 4]
+		first, second, *other = numbers
+		first, *other, last = numbers
+
+		# dict
+		customer = {
+			"name": "John Smith",
+			"age": 30,
+			"is_verified": True
+		}
+
+		# dict unpacking
+		first = {"x": 1}
+		second = {"x": 10, "y": 2}
+		combined = {**first, **second, "z": 1}		
+
+		# tuple
+		point = (1, 2)
+		point = 1, 2 # same
+		point = 1, # trailing comma means still tuple
+		point = () # empty tuple
+
+		# sets
+		set1 = {"Roger", "Syd"}
+		numbers = [1, 1, 2, 3, 4]
+		set2 = set(numbers)		
+
+		# swap
+		x, y = y, x
+
+
+
+
+> exercise n - access string, list, dict
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		# 
+			course = "Python Programming"
+			course[0] 					# P
+			course[-1] 					# g
+			print(course[0:]) 			# Python Programming
+			print(course[:]) 			# Python Programming
+			print(course[1:-1]) 		# ython Programmin
+		
+		#
+			numbers = [1, 2, 3, 4, 5]
+			numbers[0]
+			numbers[::2] 				# skip every other number
+
+		#
+			customer = {
+				"name": "John Smith",
+				"age": 30,
+				"is_verified": True
+			}
+			customer["name"]
+			customer.get("type", "silver")
+
+
+
+> exercise n - user input
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		name = input("Enter a name: ")
+		name.lower()
+		name.upper()
+
+
+
+> exercise n - output
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		print("Hi")
+		print(f"Hi {name}")
+
+
+
+> exercise n - check type and type casting
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		#
+		age = input("Enter a age: ")
+		type(age)
+		int(age)
+
+		#
+		age = int(input("Enter a age: "))
+
+		#
+		int()
+		str()
+		float()
+		bool()
+		list()
+		tuple()
+		range()
+		dict()
+		set()
+		complex()		
+
+
+
+> exercise n - conditionals
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		#
+		if is_hot:
+			print("hot day")
+		elif is_cold:
+			print("cold day")
+		else:
+			print("beautiful day")
+
+		#
+		message = "Eligible" if age >= 18 else "Not eligible"
+
+		#
+		if 18 <= age < 65:
+			print("Eligible")
+
+	- step n
+		# Python 3.10
+		match lang:
+			case "JavaScript":
+			print("You can become a web developer.")
+
+			case "Python":
+			print("You can become a Data Scientist")
+
+			case _:
+			print("The language doesn't matter, what matters is solving problems.")
+
+
+
+> exercise n - boolean, comparison, logical
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		# false
+		""
+		0
+		None
+		bool("")
+		bool(0)
+
+	- step n
+		#
+		10 > 3 									# True
+		10 >= 3 								# True
+		10 == "10" 								# False
+		10 != "10" 								# True
+		"bag" > "apple" 						# True
+		"bag" == "BAG" 							# False
+
+	- step n
+		#
+		condition1 = True
+		condition2 = False
+		print(not condition1) 					# False
+		print(condition1 and condition2) 		# False
+		print(condition1 or condition2) 		# True
+		#
+		print(0 or 1) 							# 1
+		print(False or 'hey') 					# hey
+		print('hi' or 'hey') 					# hi
+		print([] or False) 						# False
+		print(False or []) 						# []
+		#
+		print(0 and 1) 							# 0
+		print(1 and 0) 							# 0
+		print(False and 'hey') 					# False
+		print('hi' and 'hey') 					# hey
+		print([] and False) 					# []
+		print(False and []) 					# False	
+
+
+
+> exercise n - loops
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		#
+		while i < 5:
+			print(i)
+			i += 1
+
+		#
+		white True:
+			command = input(">")
+			print("Echo", command)
+			if command.lower() == "quit":
+				break		
+
+		#
+		while guess_count < guess_limit:
+			guess = int(input("Guess: "))
+			guess_count += 1
+			if guess == secret_number:
+				print("You won")
+				break
+		else:
+			print("Sorry, you failed")		
+
+
+	- step n
+		#
+		for item in 'Python':
+			print(item)
+
+		#
+		for item in ['Cheng', 'Jan']:
+			print(item)
+
+		#
+		items = [1, 2, 3, 4]
+		for index, item in enumerate(items):
+			print(index, item)
+
+		# print 0 to 4 using range
+		for item in range(5):
+			print(item) 		
+
+		# skip count
+		for number in range(1, 10, 2): 
+			print("Attempt", number, number * ".")
+			// Attempt 1 .
+			// Attempt 3 ...
+
+		#
+		for x in range(4):
+			for y in range(3):
+				print(f'({x}, {y})')
+
+		#
+		point = {"x": 1, "y": 2}
+		for x in point.items():
+			print(x) 							# ('y', 2)
+		for key, value in point.items():
+			print(key, value) 					# y 2
+
+		#
+		successful = False
+		for number in range(3):
+			print("Attempt")
+			if successful:
+				print("Successful")
+				break
+		else:
+			print("Attempted 3 times and failed")
+
+
+
+> exercise n - is and in operators
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			is - identify operator, used to compare 2 objects and returns true if both are the same object
+			in - membership operator, used to tell if the value is contained in a list or another sequence
+	*/
+
+
+
+> exercise n - len
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		#
+		course = "Python Programming"
+		len(course)
+
+
+
+> exercise n - finding items in list
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		#
+			letters = ['a', 'b', 'c']
+			print(letters.index('a')) 				# 0
+
+		#
+			letters = ['a', 'b', 'c']
+			print(letters.index('d')) 				# ValueError
+
+		#
+			letters = ['a', 'b', 'c']
+				if "d" in letters:
+					print(letters.index('d')) 		# nothing to show, no error
+
+		#
+			letters.count('d') 						# 0
+
+
+
+> exercise n - functions
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		#
+		def greet(name):
+			if not name:
+				return
+			print('hello ' + name)
+
+		greet(False)
+		greet('cheng')
+		
+		#
+		def greet(name='bob')
+			print(f'Hi {name}')
+
+		# keyword arguments
+		def increment(number, by):
+			return number + by
+
+		print(increment(2, by=1))		
+
+	- step n
+		# *args
+		def multiply(*numbers):
+			total = 1
+			print(numbers) 				# returns a tuple. (value1, value2, ...)
+			for number in numbers:
+				print(number)
+				total *= number
+			return total
+
+		print(multiply(2, 3, 4, 5))
+
+		# **args
+		def save_user(**user):
+			print(user) 				# returns a dictionary. {'id': 1, 'name': 'John', 'age': 22}
+			print(user["id"])
+			print(user["name"])
+			print(user["age"])
+
+		save_user(id=1, name="John", age=22)		
+
+	- step n
+		#
+
+
+
+> exercise n - lambda
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		multiply = lambda num : num * 2
+		print(multiply(2))
+
+
+
+> exercise n - map()
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		numbers = [1, 2, 3]
+		print(list(map(lambda a: a * 2, numbers)))
+	
+
+
+> exercise n - filter()
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		numbers = [1, 2, 3, 4, 5, 6]
+		print(list(filter(lambda n : n % 2 == 0, numbers)))
+
+
+
+> exercise n - comprehension
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		# list comprehension
+		items = [
+			("Product1", 10),
+			("Product2", 9),
+			("Product3", 12),
+		]
+		# filtered = list(filter(lambda item: item[1] >= 10, items))
+		filtered = [item for item in items if item[1] >= 10]		
+
+		# dict comprehension
+		values = {x: x * 2 for x in range(5)}
+		print(values)		
+
+
+
+> exercise n - annotations
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		#
+		count: int = 0	
+
+		#
+		def increment(n: int) -> int :  
+			return n + 1
+
+
+
+> exercise n - decorators
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		def logtime(func):
+			def wrapper():
+				# done before
+				print("before")
+				val = func()
+				# done after
+				print("after")
+				return val
+			return wrapper
+		@logtime
+		def hello():
+			print('hello')
+		hello()
+		# before
+		# hello
+		# after
+
+
+
+> exercise n - exceptions
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			try:
+				# some lines of code
+			except <ERROR1>:
+				# handler <ERROR1>
+			except <ERROR2>:
+				# handler <ERROR2>
+			except:
+			else:
+			finally:
+	*/
+	- step n
+		try:
+			age = int(input("Age: "))
+		except ValueError:
+			print("You didn't enter a valid age.")
+		else:
+			print("No exceptions were thrown")
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+> exercise n - class
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		class Person:
+			def __init__(self, name):
+				self.name = name
+			def greet(self):
+				print("Hi, I'm " + self.name)
+		person1 = Person('Cheng')
+		person1.age = 10
+		person1.greet()
+
+	- step n
+		# overriding
+		class Animal:
+			def __init__(self):
+				self.age = 1
+			def eat(self):
+				print("eat")
+		class Mammal(Animal):
+			def __init__(self):
+				super().__init__() 		# remove super if you want to override the parent method
+				self.weight = 2
+			def walk(self):
+				print("walk")
+		m = Mammal()
+		print(m.age)
+		print(m.weight)
+
+	- step n
+		# multilevel inheritance
+		class Animal:
+			def eat(self):
+				print("eat")
+		class Bird(Animal):
+			def fly(self):
+				print("fly")
+		class Chicken(Bird):
+			pass
+
+	
+	- step n
+		# multiple inheritance
+		class Flyer:
+			def fly(self):
+				pass
+		class Swimmer:
+			def swim(self):
+				pass
+		class FlyingFish(Flyer, Swimmer)
+			pass
+
+
+
+> exercise n - polymorphism - with Inheritance and Method Overriding
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- in short, polymorphism just totally overrides the parents method
+	*/
+	- step n
+		class Animal:
+			def speak(self):
+				raise NotImplementedError("Subclass must implement this method")
+		class Dog(Animal):
+			def speak(self):
+				return "Woof!"
+		class Cat(Animal):
+			def speak(self):
+				return "Meow!"
+		animals = [Dog(), Cat()]
+		for animal in animals:
+			print(animal.speak())
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+> exercise n - modules
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		# sales.py
+			def calc_tax():
+				pass
+			def calc_shipping():
+				pass
+		# app.py
+			from sales import calc_shipping, calc_tax
+			calc_shipping()
+
+
+
+> exercise n - packages
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		# ecommerce/__init__.py
+			# python will treat this folder as a package if you have this file
+		# ecommerce/sales.py
+			def calc_tax():
+				pass
+			def calc_shipping():
+				pass
+		# app.py
+			import ecommerce.sales
+			ecommerce.sales.calc_tax()
+			# or
+			from ecommerce.sales import calc_tax, calc_shipping
+			calc_tax()
+			# or 
+			from ecommere import sales
+			sales.calc_tax
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+> exercise n - paths
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		#
+		from pathlib import Path
+		print(Path("C:\\Program Files\\Microsoft"))
+		Path(r"C:\Program Files\Microsoft") 				# same C:\Program Files\Microsoft
+
+		#
+		Path() 												# . current folder
+		Path() / "ecommerce" / "__init__.py" 				# ecommerce\__init__.py
+		print(path.exists())
+
+		#
+		print(path.is_file())
+		print(path.is_dir())
+		print(path.name)
+		print(path.stem)
+		print(path.suffix)
+		print(path.parent)
+
+
+
+> exercise n - directories
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		#
+		from pathlib import Path
+		path = Path("emails")
+		if path.exists():
+			path.rmdir()
+		else:
+			path.mkdir()
+
+		#
+		path = Path("ecommerce")
+		print(path.iterdir()) 								# <generator Object>
+		paths = [p for p in path.iterdir() if p.is_dir()]
+		py_files = [p for p in path.glob("*.py")]
+		print(py_files)		
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+> exercise n - File Handling
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 4 different methods (modes) for opening a file
+				- "r" - Read - Default value. Opens a file for reading, error if the file does not exist
+				- "a" - Append - Opens a file for appending, creates the file if it does not exist
+				- "w" - Write - Opens a file for writing, creates the file if it does not exist
+				- "x" - Create - Creates the specified file, returns an error if the file exists
+				-
+				- "t" - Text - Default value. Text mode
+				- "b" - Binary - Binary mode (e.g. images)
+	*/
+	- step n
+		# with
+		
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+> exercise n - JSON
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		# json.loads - JSON to Python
+		import json
+		# some JSON:
+		x =  '{ "name":"John", "age":30, "city":"New York"}'
+		# parse x:
+		y = json.loads(x)
+		# the result is a Python dictionary:
+		print(y["age"])			
+
+		# json.dumps - Python to JSON
+		import json
+		# a Python object (dict):
+		x = {
+		  "name": "John",
+		  "age": 30,
+		  "city": "New York"
+		}
+		# convert into JSON:
+		y = json.dumps(x)
+		# the result is a JSON string:
+		print(y)
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+

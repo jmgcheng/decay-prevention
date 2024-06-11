@@ -1,0 +1,740 @@
+- here, routines are "exercises"
+- exercises ARE NOT study materials
+- you do "exercises" everyday if you have time to spare
+- "exercises" are use for "daily execution" to remove skill decay, achieve mastery, and job interview preparedness
+- "exercises" for job interview preparedness "anytime anywhere"
+- exercise has a "contained" specific goal 
+- exercise may have "steps" to finish the said exercise
+- pervious exercise should mostly prepare you for the next exercise
+- exercise are arrange from top the easiest to hardest at the bottom
+- "futured decayed self" is expected to slowly repeat an exercise and proceed to the next if skill/knowledge and time are ready
+- improve and insert more exercise as time goes on
+
+
+
+
+
+
+> exercise n - installation
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> mkdri projName
+		> cd projName
+		> python -m venv env
+
+		# in windows
+		> env\Scripts\activate
+
+		# in linux
+		> source env/bin/activate
+
+
+
+> exercise n - excel to mssql
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- https://www.youtube.com/watch?v=98P9miPwttE
+	*/
+	- step n
+		> pip install pandas SQLAlchemy openpyxl pyodbc
+
+	- step n
+		#
+		import pandas as pd
+		import sqlalchemy as sa
+
+		df = pd.read_excel('C:\\path\\to\\Employee_data.xlsx')
+		df['FullName'] = df['FirstName'] + ' ' + df['LastName']
+
+		server_name = 'DESKTOP-B62J883\\SQLEXPRESS'
+		database_name = 'testdb01'
+		driver = 'ODBC+Driver+17+for+SQL+Server'
+		connection_string = f'mssql+pyodbc://{server_name}/{database_name}?driver={driver}'
+		engine = sa.create_engine(connection_string)
+
+		# df.to_sql(name='DimEmployee', con=engine, index=False, if_exists='fail|replace|append')
+		df.to_sql(name='DimEmployee', con=engine, index=False, if_exists='replace')
+
+
+
+> exercise n - api json to mysql
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- https://www.youtube.com/watch?v=Sw79_adeUR0
+	*/
+	- step n
+		> pip install pandas SQLAlchemy pyodbc requests
+
+	- step n
+		#
+		import requests
+		import pandas
+		import sqlalchemy
+		import os
+		import urllib.parse
+
+		url = 'https://api.coincap.io/v2/assets'
+		header = {
+		    "Content-Type": "application/json",
+		    "Accept-Encoding": "deflate"
+		}
+		response = requests.get(url, headers=header)
+
+		response_data = response.json()
+		df = pandas.json_normalize(response_data, 'data')
+
+		username = os.getenv('DB_USERNAME')
+		password = urllib.parse.quote_plus(os.getenv('DB_PASSWORD'))
+		hostname = 'localhost'
+		port = '3306'
+		database_name = 'testdb01'
+		connection_string = f'mysql+mysqlconnector://{username}:{password}@{hostname}:{port}/{database_name}'
+		engine = sqlalchemy.create_engine(connection_string)
+
+		df.to_sql(name='factcrypto', con=engine, index=False, if_exists='replace')
+
+
+
+> exercise n - mssql to postgresql
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		#
+		import pyodbc
+		import pandas as pd
+		from sqlalchemy import create_engine
+
+		def extract():
+		    mssql_server = 'DESKTOP-B62J883\\SQLEXPRESS'
+		    mssql_database = 'testdb01'
+		    mssql_conn = pyodbc.connect(
+		        f'DRIVER=ODBC Driver 17 for SQL Server;'
+		        f'SERVER={mssql_server};'
+		        f'DATABASE={mssql_database};'
+		        f'Trusted_Connection=yes;'
+		    )
+
+		    tables = ['DimEmployee', 'FactCrypto', 'cal_uni']
+
+		    for table in tables:
+		        df = pd.read_sql_query(f'SELECT * FROM {table}', mssql_conn)
+		        load(df, table)
+
+		def load(df, table):
+		    username = 'postgres'
+		    password = 'password'
+		    hostname = 'localhost'
+		    port = '5432'
+		    database_name = 'testdb01'
+		    connection_string = f'postgresql://{username}:{password}@{hostname}:{port}/{database_name}'
+		    engine = create_engine(connection_string)
+		    df.to_sql(table, con=engine, index=False, if_exists='replace')
+		    print(f'Data imported to {table} in PostgreSQL')
+
+		extract()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+

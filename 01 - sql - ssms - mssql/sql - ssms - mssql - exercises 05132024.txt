@@ -1,0 +1,686 @@
+- here, routines are "exercises"
+- exercises ARE NOT study materials
+- you do "exercises" everyday if you have time to spare
+- "exercises" are use for "daily execution" to remove skill decay, achieve mastery, and job interview preparedness
+- "exercises" for job interview preparedness "anytime anywhere"
+- exercise has a "contained" specific goal 
+- exercise may have "steps" to finish the said exercise
+- pervious exercise should mostly prepare you for the next exercise
+- exercise are arrange from top the easiest to hardest at the bottom
+- "futured decayed self" is expected to slowly repeat an exercise and proceed to the next if skill/knowledge and time are ready
+- improve and insert more exercise as time goes on
+
+
+
+
+
+
+> exercise n - check if a mssql process is running
+	/*
+		Goals:
+			- debugging
+			- 
+		Requirements:
+			- SQL Server Management Studio (SSMS) should already be installed in your computer
+		Notes:
+			- mssql seems like they dont have xampp or just a simple stand alone server where you can simple start
+			- is seems its more easier to use SSMS rather than cmd
+				- output in cmd are not formatted
+				- need to type go every command
+			- sql server auto starting after I installed ssms
+			- logging into a different user has a lot of issues on my end
+				- for now only use Authentication = Windows Authentication
+	*/
+	- step n
+		# for windows
+		> tasklist | findstr /I "sql"
+
+
+		# for linux
+		> ps aux | grep -i "sql"
+
+
+
+> exercise n - start SSMS
+	/*
+		Goals:
+			- 
+		Requirements:
+			- SQL Server Management Studio (SSMS) should already be installed in your computer
+		Notes:
+			- mssql seems like they dont have xampp or just a simple stand alone server where you can simple start
+			- is seems its more easier to use SSMS rather than cmd
+				- output in cmd are not formatted
+				- need to type go every command
+			- sql server auto starting after I installed ssms
+			- logging into a different user has a lot of issues on my end
+				- for now only use Authentication = Windows Authentication
+	*/
+	- step n
+		windows button > SQL Server Management Studio (SSMS) > 
+			Server type: Database Engine
+			Server name: DESKTOP-xxxxx\SQLEXPRESS
+			Authentication: Windows Authentication
+	- step n
+		- 
+
+
+
+> exercise n - start mssql in cmd
+	/*
+		Goals:
+			- 
+		Requirements:
+			- sqlcmd should already be installed
+				- i'm not sure if I got this from installing ssms
+		Notes:
+			- i got values below in ssms
+				- DESKTOP-B62J883\SQLEXPRESS
+				- DESKTOP-B62J883\Kael
+	*/
+	- step n
+		# if Authentication is Windows Authentication
+		> sqlcmd -S DESKTOP-B62J883\SQLEXPRESS -E
+
+		# normal
+		> sqlcmd -S <server_name> -U <username> -P
+		> sqlcmd -S DESKTOP-B62J883\SQLEXPRESS -U DESKTOP-B62J883\Kael -P
+
+
+
+
+> exercise n - show databases
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> SELECT name FROM sys.databases;
+		# every command need a go before it can run if using cmd
+		> go
+
+	
+
+> exercise n - show users
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		SELECT name, type_desc
+		FROM sys.database_principals
+		WHERE type IN ('S', 'U', 'G')
+		  AND name NOT LIKE '##%';
+
+
+
+> exercise n - create, use, and delete database
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> CREATE DATABASE testdb;
+
+	- step n
+		> USE testdb;
+
+	- step n
+		# note that you need to right click > task > detach the current user first before you can drop a database 
+		# 	or just use a different database before dropping you want to drop
+		> DROP DATABASE testdb;
+
+
+
+> exercise n - show tables of a database
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		SELECT TABLE_NAME
+		FROM INFORMATION_SCHEMA.TABLES
+		WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_CATALOG = 'YourDatabaseName';
+
+
+
+> exercise n - create a user and use it
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- logging into a different user has a lot of issues on my end
+				- for now only use Authentication = Windows Authentication
+
+	*/
+	- step n
+		# Create a login (assuming SQL Server Authentication)
+		CREATE LOGIN username WITH PASSWORD = 'password';
+
+		# Create a user in a specific database and map it to the login
+		USE database_name;
+		CREATE USER username FOR LOGIN username;
+
+	- step n
+		# Grant permissions to the user in the specific database
+		USE database_name;
+		GRANT ALL PRIVILEGES TO username;
+
+	- step n
+		# if Authentication is Windows Authentication
+		> sqlcmd -S DESKTOP-B62J883\SQLEXPRESS -E
+
+		# normal
+		> sqlcmd -S <server_name> -U <username> -P
+		> sqlcmd -S DESKTOP-B62J883\SQLEXPRESS -U DESKTOP-B62J883\Kael -P
+
+
+
+> exercise n - check current user
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> SELECT CURRENT_USER;
+
+
+
+> exercise n - delete user
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> USE database_name;
+		> DROP USER username;
+		> DROP LOGIN username;
+
+
+
+> exercise n - create, describe, and drop table
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> use database_name;
+
+	- step n
+		> CREATE TABLE users (
+		    id INT NOT NULL IDENTITY(1,1),  -- IDENTITY(1,1) specifies auto-increment
+		    name VARCHAR(255) NOT NULL,
+		    PRIMARY KEY (id)
+		);
+
+		> CREATE TABLE posts (
+		    id INT NOT NULL IDENTITY(1,1),
+		    date DATETIME NOT NULL DEFAULT GETDATE(),
+		    author_id INT NOT NULL,
+		    title VARCHAR(255) NOT NULL,
+		    content TEXT,
+		    PRIMARY KEY (id),
+		    FOREIGN KEY (author_id) REFERENCES users(id)
+		);
+
+	- step n
+		> EXEC sp_help users;
+		> EXEC sp_help posts;
+
+	- step n
+		> DROP TABLE users;	
+		> DROP TABLE posts;	
+
+
+
+> exercise n - insert and select records in table
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- use database_name
+
+	- step n
+		> INSERT INTO users (name) values ('Bob'), ('John'), ('Steve');
+		> INSERT INTO posts (author_id, title, content) values (1, 'First Post', 'The first content'), (1, 'Second Post', 'Second content posted');
+
+	- step n
+		> SELECT * FROM users;
+		> SELECT * FROM users as u LEFT JOIN posts as p ON u.id = p.author_id ORDER BY p.date, p.id DESC;
+		> SELECT * FROM users as u LEFT JOIN posts as p ON u.id = p.author_id WHERE p.author_id IS NOT NULL ORDER BY p.date, p.id DESC;
+
+
+
+> exercise n - update table record
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> use database_name
+
+	- step n
+		> UPDATE posts SET author_id = 3, title= 'Updated Post' WHERE posts.id = 2;
+		> SELECT * FROM posts;
+
+
+
+> exercise n - delete table record
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> DELETE FROM posts WHERE posts.id = 2;
+		> SELECT * FROM posts;
+
+
+
+> exercise n - delete all records in table
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> TRUNCATE table posts;
+
+
+
+> exercise n - add and drop primary and foreign key on a table
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> 
+			SELECT TABLE_NAME
+			FROM INFORMATION_SCHEMA.TABLES
+			WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_CATALOG = 'YourDatabaseName';
+
+		> EXEC sp_help users;
+		> EXEC sp_help posts;
+
+	- step n
+		# add a primary key in an existing table
+		> ALTER TABLE users ADD CONSTRAINT PK_users PRIMARY KEY (id);
+
+		# add a foreign key in an existing table
+		> ALTER TABLE posts ADD CONSTRAINT FK_posts_users FOREIGN KEY (author_id) REFERENCES users(id);
+
+	- step n
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+

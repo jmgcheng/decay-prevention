@@ -1,0 +1,608 @@
+- here, routines are "exercises"
+- exercises ARE NOT study materials
+- you do "exercises" everyday if you have time to spare
+- "exercises" are use for "daily execution" to remove skill decay, achieve mastery, and job interview preparedness
+- "exercises" for job interview preparedness "anytime anywhere"
+- exercise has a "contained" specific goal 
+- exercise may have "steps" to finish the said exercise
+- pervious exercise should mostly prepare you for the next exercise
+- exercise are arrange from top the easiest to hardest at the bottom
+- "futured decayed self" is expected to slowly repeat an exercise and proceed to the next if skill/knowledge and time are ready
+- improve and insert more exercise as time goes on
+
+
+
+
+
+
+> exercise n - installation - Docker
+	/*
+		Goals:
+			- 
+		Notes:
+			- its been a long time since i installed Docker in my windows and I did not take notes before
+			- i remember that
+				- WSL or windows subsystem for linux is required before installing Docker
+			- be sure Docker is properly installed before proceeding below for exercise below
+		Requirements:
+			- Docker Desktop application should already be running before proceeding below
+	*/
+
+
+
+> exercise n - Docker Desktop
+	/*
+		Goals:
+			- 
+		Requirements:
+			- installed Docker Desktop
+		Notes:
+			- Docker Desktop should already be runnin before proceeding to below and starting kubernetes
+	*/
+
+
+
+> exercise n - Oracle VM VirtualBox
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- VirtualBox should already be install before proceeding below and starting kubernetes
+			- i'm not sure on the order i got below since i was doing different projects
+				- VirtualBox
+				- Docker Desktop
+	*/
+
+
+
+> exercise n - hyperv
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- hyperv should already be install before proceeding below and starting kubernetes
+	*/
+
+
+
+> routine n - installation - minikube cluster 
+	/*
+		Notes:
+	*/
+	# search kubernetes install minikube
+
+	https://www.youtube.com/watch?v=xNefZ51jHKg
+
+
+	# ! minikube needs virtualization on your machine
+		- kvm OR
+		- virtualbox
+
+
+
+-------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------
+
+
+
+> exercise n - check if kubectl and minikube is installed
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- minikube cli
+				- for start up/deleting the cluster
+			- kubectl cli
+				- for configuring the minikube cluster
+	*/
+	- step n
+		> minikube
+		> kubectl
+
+
+
+> exercise n - minikube basics commands
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- sometimes starting with command below still fails even if you are already running cmd on administrator. Just close and open cmd again using admin
+				> minikube start --driver=hyperv
+	*/
+	- step n
+		# cmd need to be run as administrator
+		> minikube start --driver=hyperv
+		> minikube status
+		> minikube stop
+
+
+
+> exercise n - kubectl basics commands
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> kubectl version
+
+	- step n - get info
+		> kubectl get namespace
+		> kubectl get nodes
+		> kubectl get nodes -n namespace
+		> kubectl get pod
+		> kubectl get pod -o wide
+		> kubectl get pod --all-namespaces
+		> kubectl get services
+		> kubectl get deployment
+		> kubectl get replicaset
+		> kubectl get configmap -n namespace
+		>
+		> kubectl logs podName
+		> kubectl logs podName -n namespace
+		> kubectl logs mysql-9674c6b85-dq7kz -n myapp
+		>
+		> kubectl describe pod podName
+		> kubectl describe pod podName -n namespace
+		> kubectl describe pod mysql-9674c6b85-w2bfx -n myapp
+		> kubectl describe service serviceName
+		> kubectl describe ingress ingressName
+		>
+		# check volume if its bound
+		> kubectl get pvc -n myapp
+
+	- step n - exec - get inside the terminal of the container
+		> kubectl get pod
+		# kubectl exec -it podName -- bin/sh
+		# kubectl exec -it mongo-depl-558475c797-472fp -- bin/sh
+		# exit
+
+	- step n - delete deployment
+		> kubectl get deployment
+		> kubectl get pod
+		> kubectl delete deployment deploymentName
+
+
+
+> exercise n - deployment - NOT using configuration file
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		# kubectl create deployment name --image=imageNameAtDockerHub [--dry-run] [options]
+		> kubectl create deployment nginx-depl --image=nginx
+		>
+		> kubectl get deployment
+		> kubectl get pod
+		> kubectl get replicaset
+		>
+		# check status which kubernetes automatically generates in yaml format
+		# this is the updated configuration of your deployment that actually resides in etcd
+		# all of this is automatically edited and updated by kubernetes
+		> kubectl get deployment nginx-depl -o yaml	
+		>
+		# edit deployment
+		> kubectl edit deployment deploymentName
+		>
+		# delete deployment
+		> kubectl delete deployment deploymentName
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+

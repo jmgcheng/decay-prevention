@@ -1,0 +1,1361 @@
+- here, routines are "exercises"
+- exercises ARE NOT study materials
+- you do "exercises" everyday if you have time to spare
+- "exercises" are use for "daily execution" to remove skill decay, achieve mastery, and job interview preparedness
+- "exercises" for job interview preparedness "anytime anywhere"
+- exercise has a "contained" specific goal 
+- exercise may have "steps" to finish the said exercise
+- pervious exercise should mostly prepare you for the next exercise
+- exercise are arrange from top the easiest to hardest at the bottom
+- "futured decayed self" is expected to slowly repeat an exercise and proceed to the next if skill/knowledge and time are ready
+- improve and insert more exercise as time goes on
+
+
+
+
+
+
+
+
+
+> exercise n - installation
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> mkdri projName
+		> cd projName
+		> python -m venv env
+
+		# in windows
+		> env\Scripts\activate
+
+		# in linux
+		> source env/bin/activate
+
+	- step n
+		> pip install pandas
+
+
+
+> exercise n - get data - extract
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n - Series
+		#
+		import pandas as pd
+		a = [1, 7, 2]
+		ds = pd.Series(a)
+		print(ds)
+
+	- step n - DataFrame
+		#
+		import pandas as pd
+		my_dict = {
+		  'cars': ["BMW", "Volvo", "Ford"],
+		  'passings': [3, 7, 2]
+		}
+		df = pd.DataFrame(my_dict)
+		print(df)
+
+	- step n - read_csv
+		#
+		import pandas as pd
+		df = pd.read_csv('data.csv')		
+		print(df)
+
+	- step n - read_excel
+		#
+		import pandas as pd
+		df = pd.read_excel('C:\\path\\to\\your\\excel_file.xlsx')
+		print(df)
+
+	- step n - read_json - read json file
+		#
+		import pandas as pd
+		df = pd.read_json('data.json')
+		print(df)
+
+	- step n - json_normalize - from api json
+		#
+		import requests
+		import pandas as pd
+		url = 'https://website.com/api'
+		header = {
+		    "Content-Type": "application/json",
+		    "Accept-Encoding": "deflate"
+		}
+		response = requests.get(url, headers=header)
+		response_data = response.json()
+		df = pd.json_normalize(response_data, 'data')
+		print(df)
+
+	- step n - read_sql_query - 
+		#
+		import pyodbc
+		import pandas as pd
+		mssql_server = 'DESKTOP-B62J883\\SQLEXPRESS'
+		mssql_database = 'testdb01'
+		mssql_conn = pyodbc.connect(
+		    f'DRIVER=ODBC Driver 17 for SQL Server;'
+		    f'SERVER={mssql_server};'
+		    f'DATABASE={mssql_database};'
+		    f'Trusted_Connection=yes;'
+		)
+		tables = ['table1', 'table2', 'table3']
+		for table in tables:
+		    df = pd.read_sql_query(f'SELECT * FROM {table}', mssql_conn)
+		    print(df)
+
+	- step n - 
+		- 
+
+
+
+> exercise n - display data info
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n - info
+		#
+		import pandas as pd
+		df = pd.read_csv('data.csv')
+		print(df.info())
+
+	- step n - shape - (rows, columns)
+		#
+		print(df.shape)
+
+	- step n - columns
+		#
+		print(df.columns)
+		print(df.rows)
+
+	- step n - value_counts
+		#
+		print(df.columns)
+		df[['column_name']]
+		df[['column_name']].value_counts()
+
+	- step n - count
+		#
+		df['ConvertedComp'].count()
+
+	- step n - check duplicate
+		#
+		print(df.duplicated())
+
+
+
+> exercise n - display data
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		#
+		print(df)
+
+	- step n - with index
+		#
+		import pandas as pd
+		a = [1, 7, 2]
+		ds = pd.Series(a, index = ["x", "y", "z"])
+		print(ds)
+		#
+			x    1
+			y    7
+			z    2
+
+	- step n - with index
+		#
+		import pandas as pd
+		data = {
+		  "calories": [420, 380, 390],
+		  "duration": [50, 40, 45]
+		}
+		df = pd.DataFrame(data, index = ["day1", "day2", "day3"])
+		print(df) 
+		#
+			      calories  duration
+			day1       420        50
+			day2       380        40
+			day3       390        45
+
+	- step n - to_string() - print the entire DataFrame
+		#
+		print(df.to_string())
+
+	- step n - max_rows
+		#
+		print(pd.options.display.max_rows)
+		pd.options.display.max_rows = 100
+		print(df)
+
+
+
+> exercise n - head / tails
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		#
+		import pandas as pd
+		df = pd.read_csv('data.csv')
+		print(df.head(10))
+		print(df.tail())
+
+
+
+> exercise n - display specific row(s) data
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- loc[row(s)/index(es), column(s)]
+	*/
+	- step n
+		#
+		people = {
+			"first": ["Corey", "Jane", "John"],
+			"last": ["Schafer", "Doe", "Doe"],
+			"email": ["CoreyMSchafer@gmail.com", "JadeDoe@email.com", "JohnDoe@email.com"]
+		}
+		df['email']
+		#
+					email		
+			0 		Corey.....com
+			1 		Jane....com
+			... 	...		
+		df[['last', 'email']]
+		#
+				last		email
+			0	Schafer		CoreyMSchafer@gmail.com
+			1	Doe			JadeDoe@email.com
+			2	Doe			JohnDoe@email.com	
+
+	- step n - loc - get 1st row
+		#
+		import pandas as pd
+		data = {
+		  "calories": [420, 380, 390],
+		  "duration": [50, 40, 45]
+		}
+		df = pd.DataFrame(data)
+		print(df.loc[0])	
+		#
+		calories    420
+		duration     50
+		Name: 0, dtype: int64			
+
+	- step n - loc - get 1st and 2nd row
+		#
+		print(df.loc[[0, 1]])
+		#
+		     calories  duration
+		  0       420        50
+		  1       380        40			
+	
+	- step n - loc - by index name
+		#
+		df = pd.DataFrame(data, index = ["day1", "day2", "day3"])
+		print(df.loc["day2"])
+		#
+			calories    380
+			duration     40
+			Name: day2, dtype: int64
+
+	- step n - iloc and loc - 
+		#
+		people = {
+			"first": ["Corey", "Jane", "John"],
+			"last": ["Schafer", "Doe", "Doe"],
+			"email": ["CoreyMSchafer@gmail.com", "JadeDoe@email.com", "JohnDoe@email.com"]
+		}
+		df.iloc[0]
+		#
+			first                      Corey
+			last                     Schafer
+			email    CoreyMSchafer@gmail.com
+
+		#
+		df.iloc[[0, 1]]
+		#
+				first	last		email
+			0	Corey	Schafer		CoreyMSchafer@gmail.com
+			1	Jane	Doe			JadeDoe@email.com
+
+		#
+		df.iloc[[0, 1], 2]
+		#
+			0    CoreyMSchafer@gmail.com
+			1          JadeDoe@email.com
+
+		#
+		df.loc[0]
+		#
+			first                      Corey
+			last                     Schafer
+			email    CoreyMSchafer@gmail.com		
+
+		#
+		df.loc[[0, 1]]
+		#
+					first	last		email
+			0		Corey	Schafer		CoreyMSchafer@gmail.com
+			1		Jane	Doe			JadeDoe@email.com
+
+		#
+		df.loc[0:10, ['email', 'last']]
+		#
+				email						last
+			0	CoreyMSchafer@gmail.com		Schafer
+			1	JadeDoe@email.com			Doe	
+			...
+
+	- step n - loc - change index for searching
+		#
+		df.set_index('email', inplace=True)
+		df
+		df.index
+		df.loc['CoreyMSchafer@gmail.com', ['last']]
+		df.reset_index(inplace=True)
+		df
+	
+
+
+> exercise n - filtering
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		# 
+		filt = df['last'] == 'Doe'
+		df.loc[filt, ['email']]
+		#
+						email
+		1	JadeDoe@email.com
+		2	JohnDoe@email.com			
+
+	- step n - filter and
+		#
+		filt = (df['last'] == 'Doe') & (df['first'] == 'John')
+
+	- step n - filter or
+		# 
+		filt = (df['last'] == 'Schafer') | (df['first'] == 'John')
+
+	- step n - filter not
+		#
+		filt = (df['last'] == 'Schafer') | (df['first'] == 'John')
+		df.loc[~filt, ['email']]		
+
+	- step n - comparing
+		# 
+		high_salary = (df['ConvertedComp'] > 70000)
+		df.loc[high_salary, ['column1', 'column2', 'column3']]		
+
+	- step n - isin
+		#
+		countries = ['United States', 'India', 'United Kingdom', 'Germany', 'Canada']
+		filt = df['Country'].isin(countries)
+		df.loc[filt, ['Country']]		
+
+	- step n - str.contains
+		# 
+		filt = df['column_name'].str.contains('Python', na=False)
+		df.loc[filt, ['column_name']]		
+
+
+
+> exercise n - sorting
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		#
+		df.sort_values(by=['column1', 'column2'], ascending=[False, True], inplace=True)
+
+		#
+		df['column1'].sort_values()
+
+
+
+> exercise n - grouping
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n - value_counts
+		#
+		df['column_name'].value_counts()
+
+		#
+		filt = df['Country'] == 'United States'
+		df.loc[filt]['SocialMedia'].value_counts()		
+
+	- step n - 
+		#
+
+
+
+> exercise n - update
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n - update column names
+		#
+		df.rename(columns={'first_name': 'first', 'last_name': 'last'}, inplace=True)
+
+	- step n - update row values
+		#
+		df.loc[2]
+		#
+			first                 John
+			last                   Doe
+			email    JohnDoe@email.com
+			Name: 2, dtype: object	
+
+		df.loc[2, ['last', 'email']] = ['Doe', 'JohnDoe@email.com']
+		df
+		#
+				first	last		email
+			0	Corey	Schafer		CoreyMSchafer@gmail.com
+			1	Jane	Doe			JadeDoe@email.com
+			2	John	Doe			JohnDoe@email.com
+
+	- step n - update row value with filter
+		#
+		filt = (df['email'] == 'JohnDoe@email.com')
+		df.loc[filt, 'last'] = 'Smith'		
+
+	- step n - apply - update all column values
+		#
+		df['email'] = df['email'].apply(lambda x: x.lower())
+
+	- step n - map - update all column values
+		#
+		df['Hobbyist']
+		#
+			Respondent
+			1        Yes
+			2         No		
+		df['Hobbyist'] = df['Hobbyist'].map({'Yes': True, 'No': False})
+		#
+			Respondent
+			1         True
+			2        False
+
+	- step n - replace - update all colume values
+		#
+		df['first'] = df['first'].replace({'Corey': 'Chris', 'Jane': 'Mary'})
+
+
+
+> exercise n - add
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n - create a new column
+		#
+		df['full_name'] = df['first'] + ' ' + df['last']
+
+	- step n - create 2 new column
+		#
+		df[['first', 'last']] = df['full_name'].str.split(' ',  expand=True)
+
+	- step n - concat
+		#
+		people2 = {
+		    'first': ['Tony', 'Steve'],
+		    'last': ['Stark', 'Rogers'],
+		    'email': ['IronMan@avenge.com', 'Cap@avenge.com']
+		}
+		df2 = pd.DataFrame(people2)
+		df = pd.concat([df, df2], ignore_index=True)
+		df
+		#
+				first	last		email						full_name
+			0	Corey	Schafer		coreymschafer@gmail.com		Corey Schafer
+			1	Jane	Doe			jadedoe@email.com			Jane Doe
+			2	John	Smith		johndoe@email.com			John Smith
+			3	Tony	Stark		IronMan@avenge.com			NaN
+			4	Steve	Rogers		Cap@avenge.com				NaN			
+
+
+
+> exercise n - drop
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n - drop columns
+		#
+		df.drop(columns=['first', 'last'], inplace=True)
+
+	- step n - drop a row
+		#
+		df.drop(index=4)
+
+	- step n - drop with filter
+		#
+		filt = df['last'] == 'Doe'
+		df.drop(index=df[filt].index)		
+
+
+
+> exercise n - mean, median, mode
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- mean 
+				- (average) of a data set is found by adding all numbers in the data set and then dividing by the number of values in the set
+			- median 
+				- middle value when a data set is ordered from least to greatest
+			- mode 
+				- the number that occurs most often in a data set.
+	*/
+	- step n
+		#
+		df['age'].mean()
+		df['ConvertedComp'].median()
+		df["Calories"].mode()[0]
+
+
+
+> exercise n - loop
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		# 
+		for x in df.index:
+			if df.loc[x, "Duration"] > 120:
+				df.loc[x, "Duration"] = 120
+
+
+
+> exercise n - data cleaning
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n - dropna
+		#
+		df = pd.read_csv('data.csv')
+		new_df = df.dropna()
+
+		#
+		df.dropna(inplace = True)
+
+	- step n - fillna
+		#
+		df.fillna(130, inplace = True)
+
+		# fill for specific columns only
+		df["Calories"].fillna(130, inplace = True)
+
+	- step n - fillna + mean
+		#
+		x = df["Calories"].mean()
+		df["Calories"].fillna(x, inplace = True)		
+
+	- step n - wrong format - to_datetime
+		#
+		df['Date'] = pd.to_datetime(df['Date'])		
+		df.dropna(subset=['Date'], inplace = True)
+
+	- step n - to_datetime
+		#
+		df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d %I-%p')
+
+
+
+> exercise n - correlations
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		#
+		df = pd.read_csv('data.csv')
+		print(df.corr())
+
+	
+
+> exercise n - writing
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n - to_csv
+		#
+		filt = (df['Country'] == 'India')
+		india_df = df.loc[filt]
+		india_df.to_csv('data/modified.csv')
+
+	- step n - to_excel
+		#
+		india_df.to_excel('data/modified.xlsx')
+
+	- step n - to_json
+		#
+		india_df.to_json('data/modified.json')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
+
+
+

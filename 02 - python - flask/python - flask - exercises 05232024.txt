@@ -1,0 +1,934 @@
+- here, routines are "exercises"
+- exercises ARE NOT study materials
+- you do "exercises" everyday if you have time to spare
+- "exercises" are use for "daily execution" to remove skill decay, achieve mastery, and job interview preparedness
+- "exercises" for job interview preparedness "anytime anywhere"
+- exercise has a "contained" specific goal 
+- exercise may have "steps" to finish the said exercise
+- pervious exercise should mostly prepare you for the next exercise
+- exercise are arrange from top the easiest to hardest at the bottom
+- "futured decayed self" is expected to slowly repeat an exercise and proceed to the next if skill/knowledge and time are ready
+- improve and insert more exercise as time goes on
+
+
+
+
+
+
+> exercise n - 
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+
+
+
+> exercise n - check if python and pip exist/version
+	/*
+		Goals:
+			- a quick check to see if we have python, if not, go to python website and install it first
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> python --version
+		> pip --version
+
+
+
+> exercise n - setup virtual environment
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		> mkdri projName
+		> cd projName
+		> python -m venv env
+
+		# in windows
+		> env\Scripts\activate
+
+		# in linux
+		> source env/bin/activate
+
+
+
+> exercise n - setup project
+	/*
+		Goals:
+			- 
+		Requirements:
+			- env should already be running
+		Notes:
+			- 
+	*/
+	- step n - 
+		> code .
+		> mkdir core
+
+	- step n - install
+		> pip install flask
+		> pip install flask-wtf
+		> pip install email_validator
+		> pip install flask-bcrypt
+		> pip install flask-login
+		> pip install flask-sqlalchemy
+
+
+
+> exercise n - prep requirements
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n -
+		> pip freeze > requirements.txt
+		> pip install -r requirements.txt
+
+
+
+> exercise n - prep folder structure and files
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- leave files as empty for now
+	*/
+	- step n
+		project01/run.py
+		project01/core
+		project01/core/__init__.py
+		project01/core/config.py
+		project01/core/models.py
+		-
+		project01/core/main
+		project01/core/main/__init__.py
+		project01/core/main/routes.py
+		-
+		project01/core/static
+		project01/core/static/main.css
+		-
+		project01/core/templates
+		project01/core/templates/layout.html
+		project01/core/templates/about.html
+		project01/core/templates/home.html
+		project01/core/templates/register.html
+		project01/core/templates/login.html
+		project01/core/templates/post.html
+		project01/core/templates/create_post.html
+		-
+		project01/core/users
+		project01/core/users/__init__.py
+		project01/core/users/forms.py
+		project01/core/users/routes.py
+		project01/core/users/utils.py
+		-
+		project01/core/posts
+		project01/core/posts/__init__.py
+		project01/core/posts/forms.py
+		project01/core/posts/routes.py
+
+
+
+
+
+> exercise n - project01/core/config.py
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n - 
+		#
+		class Config:
+			SECRET_KEY = '00000000000000000000000000000000'
+			SQLALCHEMY_DATABASE_URI = 'sqlite:///site.db'
+
+
+
+> exercise n - project01/core/__init__.py
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n - 
+		#
+		from flask import Flask
+		from flask_sqlalchemy import SQLAlchemy
+		from flask_bcrypt import Bcrypt
+		from flask_login import LoginManager
+		from core.config import Config
+
+		db = SQLAlchemy()
+		bcrypt = Bcrypt()
+		login_manager = LoginManager()
+		login_manager.login_view = 'users.login'
+		# login_manager.login_message_category = 'info'
+
+		def create_app(config_class=Config):
+		    app = Flask(__name__)
+		    app.config.from_object(Config)
+		    db.init_app(app)
+		    bcrypt.init_app(app)
+		    login_manager.init_app(app)
+		    from core.users.routes import users
+		    from core.posts.routes import posts
+		    from core.main.routes import main
+		    app.register_blueprint(users)
+		    app.register_blueprint(posts)
+		    app.register_blueprint(main)
+
+		    return app
+
+
+
+> exercise n - project01/core/models.py
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n - 
+		#
+		from datetime import datetime
+		from core import db, login_manager
+		from flask_login import UserMixin
+
+		@login_manager.user_loader
+		def load_user(user_id):
+		    return User.query.get(int(user_id))
+
+		class User(db.Model, UserMixin):
+		    id = db.Column(db.Integer, primary_key=True)
+		    username = db.Column(db.String(20), unique=True, nullable=False)
+		    email = db.Column(db.String(120), unique=True, nullable=False)
+		    password = db.Column(db.String(60), nullable=False)
+		    posts = db.relationship('Post', backref='author', lazy=True)
+
+		    def __repr__(self):
+		        return f"User('{self.username}', '{self.email}')"
+
+		class Post(db.Model):
+		    id = db.Column(db.Integer, primary_key=True)
+		    title = db.Column(db.String(100), nullable=False)
+		    date_posted = db.Column(db.DateTime, nullable=False,
+		                            default=datetime.utcnow)
+		    content = db.Column(db.Text, nullable=False)
+		    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+		    def __repr__(self):
+		        return f"Post('{self.title}', '{self.date_posted}')"
+
+
+
+
+
+> exercise n - project01/run.py
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n - 
+		#
+		from core import create_app
+
+		app = create_app()
+
+		if __name__ == '__main__':
+		    app.run(debug=True)
+
+
+
+> exercise n - forms
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n - project01/core/users/forms.py
+		#
+		from flask_wtf import FlaskForm
+		from wtforms import StringField, PasswordField, SubmitField, BooleanField
+		from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+		from core.models import User
+
+		class RegistrationForm(FlaskForm):
+		    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
+		    email = StringField('Email', validators=[DataRequired(), Email()])
+		    password = PasswordField('Password', validators=[DataRequired()])
+		    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+		    submit = SubmitField('Sign Up')
+
+		    def validate_username(self, username):
+		        user = User.query.filter_by(username=username.data).first()
+		        if user:
+		            raise ValidationError(
+		                'That username is taken. Please choose a different one.')
+
+		    def validate_email(self, email):
+		        user = User.query.filter_by(email=email.data).first()
+		        if user:
+		            raise ValidationError(
+		                'That email is taken. Please choose a different one.')
+
+
+		class LoginForm(FlaskForm):
+		    email = StringField('Email', validators=[DataRequired(), Email()])
+		    password = PasswordField('Password', validators=[DataRequired()])
+		    remember = BooleanField('Remember Me')
+		    submit = SubmitField('Login')
+
+
+
+	- step n - project01/core/posts/forms.py
+		#
+		from flask_wtf import FlaskForm
+		from wtforms import StringField, SubmitField, TextAreaField
+		from wtforms.validators import DataRequired
+
+		class PostForm(FlaskForm):
+		    title = StringField('Title', validators=[DataRequired()])
+		    content = TextAreaField('Content', validators=[DataRequired()])
+		    submit = SubmitField('Post')
+
+
+
+> exercise n - routes
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n - project01/core/main/routes.py
+		from flask import render_template, request, Blueprint
+		from core.models import Post
+
+		main = Blueprint('main', __name__)
+
+		@main.route("/")
+		@main.route("/home")
+		def home():
+		    page = request.args.get('page', 1, type=int)
+		    posts = Post.query.order_by(
+		        Post.date_posted.desc()).paginate(page=page, per_page=5)
+		    return render_template('home.html', posts=posts)
+
+		@main.route("/about")
+		def about():
+		    return render_template('about.html', title='About')
+
+	- step n - project01/core/users/routes.py
+		from flask import render_template, url_for, flash, redirect, request, Blueprint
+		from flask_login import login_user, current_user, logout_user, login_required
+		from core import db, bcrypt
+		from core.models import User, Post
+		from core.users.forms import (RegistrationForm, LoginForm)
+
+		users = Blueprint('users', __name__)
+
+		@users.route("/register", methods=['GET', 'POST'])
+		def register():
+		    if current_user.is_authenticated:
+		        return redirect(url_for('main.home'))
+		    form = RegistrationForm()
+		    if form.validate_on_submit():
+		        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+		        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+		        db.session.add(user)
+		        db.session.commit()
+		        flash('Your account has been created! You are now able to log in', 'success')
+		        return redirect(url_for('users.login'))
+		    return render_template('register.html', title='Register', form=form)
+
+		@users.route("/login", methods=['GET', 'POST'])
+		def login():
+		    if current_user.is_authenticated:
+		        return redirect(url_for('main.home'))
+		    form = LoginForm()
+		    if form.validate_on_submit():
+		        user = User.query.filter_by(email=form.email.data).first()
+		        if user and bcrypt.check_password_hash(user.password, form.password.data):
+		            login_user(user, remember=form.remember.data)
+		            next_page = request.args.get('next')
+		            return redirect(next_page) if next_page else redirect(url_for('main.home'))
+		        else:
+		            flash('Login Unsuccessful. Please check email and password', 'danger')
+		    return render_template('login.html', title='Login', form=form)
+
+		@users.route("/logout")
+		def logout():
+		    logout_user()
+		    return redirect(url_for('main.home'))
+
+	- step n - project01/core/posts/routes.py
+		from flask import (render_template, url_for, flash, redirect, request, abort, Blueprint)
+		from flask_login import current_user, login_required
+		from core import db
+		from core.models import Post
+		from core.posts.forms import PostForm
+
+		posts = Blueprint('posts', __name__)
+
+		@posts.route("/post/new", methods=['GET', 'POST'])
+		@login_required
+		def new_post():
+		    form = PostForm()
+		    if form.validate_on_submit():
+		        post = Post(title=form.title.data, content=form.content.data, author=current_user)
+		        db.session.add(post)
+		        db.session.commit()
+		        flash('Your post has been created!', 'success')
+		        return redirect(url_for('main.home'))
+		    return render_template('create_post.html', title='New Post', form=form, legend='New Post')
+
+		@posts.route("/post/<int:post_id>")
+		def post(post_id):
+		    post = Post.query.get_or_404(post_id)
+		    return render_template('post.html', title=post.title, post=post)
+
+		@posts.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
+		@login_required
+		def update_post(post_id):
+		    post = Post.query.get_or_404(post_id)
+		    if post.author != current_user:
+		        abort(403)
+		    form = PostForm()
+		    if form.validate_on_submit():
+		        post.title = form.title.data
+		        post.content = form.content.data
+		        db.session.commit()
+		        flash('Your post has been updated!', 'success')
+		        return redirect(url_for('posts.post', post_id=post.id))
+		    elif request.method == 'GET':
+		        form.title.data = post.title
+		        form.content.data = post.content
+		    return render_template('create_post.html', title='Update Post', form=form, legend='Update Post')
+
+		@posts.route("/post/<int:post_id>/delete", methods=['POST'])
+		@login_required
+		def delete_post(post_id):
+		    post = Post.query.get_or_404(post_id)
+		    if post.author != current_user:
+		        abort(403)
+		    db.session.delete(post)
+		    db.session.commit()
+		    flash('Your post has been deleted!', 'success')
+		    return redirect(url_for('main.home'))
+
+
+
+> exercise n - css
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n - project01/core/static/main.css
+		body {
+		  margin-top: 5rem;
+		}
+		.navbar a,  .navbar button{
+		  color: black;
+		}
+		.bg-vitamin {
+		  background-color: #ff9900;
+		}			
+
+
+
+> exercise n - templates
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n - project01/core/templates/layout.html
+		<!DOCTYPE html>
+		<html>
+		<head>
+		    <!-- Required meta tags -->
+		    <meta charset="utf-8">
+		    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		    <!-- Bootstrap CSS -->
+		    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+		    {% if title %}
+		        <title>Flask Blog - {{ title }}</title>
+		    {% else %}
+		        <title>Flask Blog</title>
+		    {% endif %}
+		</head>
+		<body>
+		    <header class="site-header">
+		      <nav class="navbar navbar-expand-md bg-vitamin fixed-top">
+		        <div class="container">
+		          <a class="navbar-brand mr-4" href="/">Flask Blog</a>
+		          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+		            <span class="navbar-toggler-icon"></span>
+		          </button>
+		          <div class="collapse navbar-collapse" id="navbarToggle">
+		            <div class="navbar-nav mr-auto">
+		              <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home</a>
+		              <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About</a>
+		            </div>
+		            <!-- Navbar Right Side -->
+		            <div class="navbar-nav">
+		              {% if current_user.is_authenticated %}
+		                <a class="nav-item nav-link" href="{{ url_for('posts.new_post') }}">New Post</a>
+		                <a class="nav-item nav-link" href="#">Account</a>
+		                <a class="nav-item nav-link" href="{{ url_for('users.logout') }}">Logout</a>
+		              {% else %}
+		                <a class="nav-item nav-link" href="{{ url_for('users.login') }}">Login</a>
+		                <a class="nav-item nav-link" href="{{ url_for('users.register') }}">Register</a>
+		              {% endif %}
+		            </div>
+		          </div>
+		        </div>
+		      </nav>
+		    </header>
+		    <main role="main" class="container">
+		      <div class="row">
+		        <div class="col-md-8">
+		          {% with messages = get_flashed_messages(with_categories=true) %}
+		            {% if messages %}
+		              {% for category, message in messages %}
+		                <div class="alert alert-{{ category }}">
+		                  {{ message }}
+		                </div>
+		              {% endfor %}
+		            {% endif %}
+		          {% endwith %}
+		          {% block content %}{% endblock %}
+		        </div>
+		        <div class="col-md-4">
+		          sidebar here
+		        </div>
+		      </div>
+		    </main>
+		    <!-- Optional JavaScript -->
+		    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		</body>
+		</html>	
+
+	- step n - project01/core/templates/about.html
+		{% extends "layout.html" %}
+		{% block content %}
+		    <h1>About Page</h1>
+		{% endblock content %}		
+
+	- step n - project01/core/templates/home.html
+		{% extends "layout.html" %}
+		{% block content %}
+		    {% for post in posts.items %}
+		        <article>
+		          <div>
+		            <div>
+		              <a href="#">{{ post.author.username }}</a>
+		              <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+		            </div>
+		            <h2><a href="{{ url_for('posts.post', post_id=post.id) }}">{{ post.title }}</a></h2>
+		            <p >{{ post.content }}</p>
+		          </div>
+		        </article>
+		    {% endfor %}
+		    {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+		      {% if page_num %}
+		        {% if posts.page == page_num %}
+		          <a class="btn btn-info mb-4" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
+		        {% else %}
+		          <a class="btn btn-outline-info mb-4" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
+		        {% endif %}
+		      {% else %}
+		        ...
+		      {% endif %}
+		    {% endfor %}
+		{% endblock content %}
+
+	- step n - project01/core/templates/register.html
+		{% extends "layout.html" %}
+		{% block content %}
+		    <form method="POST" action="">
+		        {{ form.hidden_tag() }}
+		        <fieldset class="form-group">
+		            <legend class="border-bottom mb-4">Join Today</legend>
+		            <div class="form-group">
+		                {{ form.username.label(class="form-control-label") }}
+		                {% if form.username.errors %}
+		                    {{ form.username(class="form-control form-control-lg is-invalid") }}
+		                    <div class="invalid-feedback">
+		                        {% for error in form.username.errors %}
+		                            <span>{{ error }}</span>
+		                        {% endfor %}
+		                    </div>
+		                {% else %}
+		                    {{ form.username(class="form-control form-control-lg") }}
+		                {% endif %}
+		            </div>
+		            <div class="form-group">
+		                {{ form.email.label(class="form-control-label") }}
+		                {% if form.email.errors %}
+		                    {{ form.email(class="form-control form-control-lg is-invalid") }}
+		                    <div class="invalid-feedback">
+		                        {% for error in form.email.errors %}
+		                            <span>{{ error }}</span>
+		                        {% endfor %}
+		                    </div>
+		                {% else %}
+		                    {{ form.email(class="form-control form-control-lg") }}
+		                {% endif %}
+		            </div>
+		            <div class="form-group">
+		                {{ form.password.label(class="form-control-label") }}
+		                {% if form.password.errors %}
+		                    {{ form.password(class="form-control form-control-lg is-invalid") }}
+		                    <div class="invalid-feedback">
+		                        {% for error in form.password.errors %}
+		                            <span>{{ error }}</span>
+		                        {% endfor %}
+		                    </div>
+		                {% else %}
+		                    {{ form.password(class="form-control form-control-lg") }}
+		                {% endif %}
+		            </div>
+		            <div class="form-group">
+		                {{ form.confirm_password.label(class="form-control-label") }}
+		                {% if form.confirm_password.errors %}
+		                    {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
+		                    <div class="invalid-feedback">
+		                        {% for error in form.confirm_password.errors %}
+		                            <span>{{ error }}</span>
+		                        {% endfor %}
+		                    </div>
+		                {% else %}
+		                    {{ form.confirm_password(class="form-control form-control-lg") }}
+		                {% endif %}
+		            </div>
+		        </fieldset>
+		        <div class="form-group">
+		            {{ form.submit(class="btn btn-outline-info") }}
+		        </div>
+		    </form>
+		    <div class="border-top pt-3">
+		        <small class="text-muted">
+		            Already Have An Account? <a class="ml-2" href="{{ url_for('users.login') }}">Sign In</a>
+		        </small>
+		    </div>
+		{% endblock content %}
+
+	- step n - project01/core/templates/login.html
+		{% extends "layout.html" %}
+		{% block content %}
+		    <form method="POST" action="">
+		        {{ form.hidden_tag() }}
+		        <fieldset class="form-group">
+		            <legend class="border-bottom mb-4">Log In</legend>
+		            <div class="form-group">
+		                {{ form.email.label(class="form-control-label") }}
+		                {% if form.email.errors %}
+		                    {{ form.email(class="form-control form-control-lg is-invalid") }}
+		                    <div class="invalid-feedback">
+		                        {% for error in form.email.errors %}
+		                            <span>{{ error }}</span>
+		                        {% endfor %}
+		                    </div>
+		                {% else %}
+		                    {{ form.email(class="form-control form-control-lg") }}
+		                {% endif %}
+		            </div>
+		            <div class="form-group">
+		                {{ form.password.label(class="form-control-label") }}
+		                {% if form.password.errors %}
+		                    {{ form.password(class="form-control form-control-lg is-invalid") }}
+		                    <div class="invalid-feedback">
+		                        {% for error in form.password.errors %}
+		                            <span>{{ error }}</span>
+		                        {% endfor %}
+		                    </div>
+		                {% else %}
+		                    {{ form.password(class="form-control form-control-lg") }}
+		                {% endif %}
+		            </div>
+		            <div class="form-check">
+		                {{ form.remember(class="form-check-input") }}
+		                {{ form.remember.label(class="form-check-label") }}
+		            </div>
+		        </fieldset>
+		        <div class="form-group">
+		            {{ form.submit(class="btn btn-outline-info") }}
+		            <small class="text-muted ml-2">
+		                <a href="#">Forgot Password?</a>
+		            </small>
+		        </div>
+		    </form>
+		    <div class="border-top pt-3">
+		        <small class="text-muted">
+		            Need An Account? <a class="ml-2" href="{{ url_for('users.register') }}">Sign Up Now</a>
+		        </small>
+		    </div>
+		{% endblock content %}		
+
+	- step n - project01/core/templates/post.html
+		{% extends "layout.html" %}
+		{% block content %}
+		  <article>
+		    <div>
+		      <div>
+		        <a href="#">{{ post.author.username }}</a>
+		        <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+		        {% if post.author == current_user %}
+		          <div>
+		            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('posts.update_post', post_id=post.id) }}">Update</a>
+		            <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+		          </div>
+		        {% endif %}
+		      </div>
+		      <h2>{{ post.title }}</h2>
+		      <p>{{ post.content }}</p>
+		    </div>
+		  </article>
+		  <!-- Modal -->
+		  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+		    <div class="modal-dialog" role="document">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
+		          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		            <span aria-hidden="true">&times;</span>
+		          </button>
+		        </div>
+		        <div class="modal-footer">
+		          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		          <form action="{{ url_for('posts.delete_post', post_id=post.id) }}" method="POST">
+		            <input class="btn btn-danger" type="submit" value="Delete">
+		          </form>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		{% endblock content %}		
+
+	- step n - project01/core/templates/create_post.html
+		{% extends "layout.html" %}
+		{% block content %}
+		<form method="POST" action="">
+		    {{ form.hidden_tag() }}
+		    <fieldset class="form-group">
+		        <legend class="border-bottom mb-4">{{ legend }}</legend>
+		        <div class="form-group">
+		            {{ form.title.label(class="form-control-label") }}
+		            {% if form.title.errors %}
+		                {{ form.title(class="form-control form-control-lg is-invalid") }}
+		                <div class="invalid-feedback">
+		                    {% for error in form.title.errors %}
+		                        <span>{{ error }}</span>
+		                    {% endfor %}
+		                </div>
+		            {% else %}
+		                {{ form.title(class="form-control form-control-lg") }}
+		            {% endif %}
+		        </div>
+		        <div class="form-group">
+		            {{ form.content.label(class="form-control-label") }}
+		            {% if form.content.errors %}
+		                {{ form.content(class="form-control form-control-lg is-invalid") }}
+		                <div class="invalid-feedback">
+		                    {% for error in form.content.errors %}
+		                        <span>{{ error }}</span>
+		                    {% endfor %}
+		                </div>
+		            {% else %}
+		                {{ form.content(class="form-control form-control-lg") }}
+		            {% endif %}
+		        </div>
+		    </fieldset>
+		    <div class="form-group">
+		        {{ form.submit(class="btn btn-outline-info") }}
+		    </div>
+		</form>
+		{% endblock content %}		
+
+
+
+> exercise n - 
+	- step n - 
+		> python
+		> from core import create_app, db
+		> app = create_app()
+		> with app.app_context():
+		> 	db.drop_all()
+		>	db.create_all()
+
+
+
+> exercise n - dummy data
+	- step n - 
+		> python
+		> from core import create_app, db
+		> from core.models import User, Post
+		> app = create_app()
+		>
+		> user1 = User(username='test1', email='test1@yahoo.com', password='p123456789')
+		> user2 = User(username='test2', email='test2@yahoo.com', password='p123456789')
+		> with app.app_context():
+		> 	db.session.add(user1)
+		> 	db.session.add(user2)
+		> 	db.session.commit()
+		>
+		> 	user = User.query.first()
+		> 	user
+		> 	user.id
+		> 	user.posts
+		>
+		> post1 = Post(title='CLI title 1', content='CLI content 1', user_id=user.id)
+		> post2 = Post(title='CLI title 2', content='CLI content 2', user_id=user.id)
+		> with app.app_context():
+		> 	db.session.add(post1)
+		> 	db.session.add(post2)
+		> 	db.session.commit()
+		>
+		> with app.app_context():
+		> 	User.query.all()
+		> 	Post.query.all()
+
+
+
+> exercise n - run
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n - 
+		python run.py
+
+
+
+> exercise n - linux
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- flask dont have core.wsgi:application
+			- run:app
+				- run here is the run.py
+	*/
+	- step n - nginx
+		#
+		/etc/nginx/sites-available$ cat flasktest01.conf
+
+		server {
+			listen 80;
+			server_name  flasktest01.wordpresstest03.com;
+
+			location = /favicon.ico { access_log off; log_not_found off; }
+
+			location /static/ {
+				alias /var/www/flasktest01/core/static/;
+			}
+
+			location / {
+				include proxy_params;
+				proxy_pass http://unix:/var/www/flasktest01/core/app.sock;
+			}
+		}
+
+	- step n - hosts
+		#
+		/etc$ cat hosts
+
+		127.0.0.1	flasktest01.wordpresstest03.com
+		127.0.0.1	wordpresstest04.wordpresstest03.com
+		127.0.0.1	djangotest11.wordpresstest03.com
+		127.0.0.1	djangotest10.wordpresstest03.com
+		127.0.0.1	wordpresstest03.com
+		127.0.0.1	wordpresstest02.com
+		127.0.0.1	phpmyadmin.com
+		127.0.0.1	wordpresstest01.com
+		127.0.0.1	djangotest09.com
+		127.0.0.1	djangotest08.com
+
+	- step n - systemd
+		#
+		/etc/systemd/system$ cat gunicorn_flasktest01.service 
+
+		[Unit]
+		Description=Gunicorn daemon for Flask Project
+		After=network.target
+
+		[Service]
+		User=cheng
+		Group=cheng
+		WorkingDirectory=/var/www/flasktest01
+		ExecStart=/var/www/flasktest01/env/bin/gunicorn -c /var/www/flasktest01/core/gunicorn_config.py run:app --error-logfile /var/log/gunicorn/error.log
+
+		[Install]
+		WantedBy=multi-user.target
+
+
+
+
+
+> exercise n - nnn
+	/*
+		Goals:
+			- 
+		Requirements:
+			- 
+		Notes:
+			- 
+	*/
+	- step n
+		- 
+	- step n
+		- 
